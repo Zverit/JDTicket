@@ -8,10 +8,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
-
-var users = require('./routes/users');
-
-
+var HttpError = require('./error/index').HttpError;
 var app = express();
 var User = require('./models/user').User;
 var user = new User({
@@ -54,6 +51,9 @@ app.use(expressSession({
     },
     store : new MongoStore({mongoose_connection: mongoose.connection})
 }));
+
+app.use(require('./middleware/sendHttpError'));
+app.use(require('./middleware/loadUser'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 require('./routes/index')(app);
