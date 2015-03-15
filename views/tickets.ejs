@@ -1,4 +1,9 @@
 <% layout('layout') -%>
-<% block('title', "ЖД билеты") -%>
-<p>Добро пожаловать, <%=user.get('login')%></p>
-<p class="lead">Здесь будут билеты</p>
+<% block('title', "") -%>
+<div class="container text-center">
+<h3>Добро пожаловать, <%=user.get('login')%></h3>
+</div>
+<div class="jumbotron">
+<p class="lead">Билетов пока нет</p>
+<div id="solution2" data-value='{"name": "solution2"}'></div>
+</div>

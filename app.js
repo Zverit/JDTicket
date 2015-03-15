@@ -11,22 +11,6 @@ var routes = require('./routes/index');
 var HttpError = require('./error/index').HttpError;
 var app = express();
 var User = require('./models/user').User;
-var user = new User({
-    login: "Vasa",
-    password: "pass"
-});
-
-user.save(function(err, user, affacted){
- console.log(user);
- var user = new User({
- login: "Not",
- password: "passed"
- });
- user.save(function(err, user, affacted){
- console.log(user);
- });
-});
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

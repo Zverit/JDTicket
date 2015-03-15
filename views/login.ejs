@@ -1,29 +1,35 @@
 <% layout('layout') -%>
-<% block('title', "Регистрация и вход") -%>
-<p>Введите имя пользователя и пароль. Если такого пользователя нет - он будет создан.</p>
+<% block('title', "") -%>
+<div class="container">
+    <h2 class="text-center">Регистрация и вход</h2>
+<p class="text-center">Введите имя пользователя и пароль. Если такого пользователя нет - он будет создан.</p>
+</div>
+<div class="container center jumbotron">
 
-<form class="form-horizontal login-form" action="/auth/login" method="POST" name="login-form">
+<form class="form-horizontal " action="/auth/login" method="POST" name="login-form">
     <div class="form-group">
-        <label for="input-username" class="col-lg-2 control-label">Имя</label>
+        <label for="input-username" class="col-lg-3 control-label">Имя</label>
 
         <div class="col-lg-10">
             <input name="login" value="name" type="text" class="form-control" id="input-username" placeholder="Имя">
         </div>
     </div>
     <div class="form-group">
-        <label for="input-password" class="col-lg-2 control-label">Пароль</label>
+        <label for="input-password" class="col-lg-3 control-label">Пароль</label>
 
         <div class="col-lg-10">
             <input name="password" value="pass" type="password" class="form-control" id="input-password" placeholder="Пароль">
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-lg-offset-2 col-lg-3">
             <button type="submit" class="btn btn-primary" data-loading-text="Отправляю...">Войти</button>
             <span class="help-block error"></span>
         </div>
     </div>
 </form>
+
+    </div>
 
 <script>
     $(document.forms['login-form']).on('submit', function() {

@@ -9,3 +9,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+.center {
+    text-align:center;
+}
+
+.center form {
+    display:inline-block;
+}

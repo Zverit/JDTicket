@@ -1,5 +1,7 @@
 var User = require('../models/user').User;
+var Ticket = require('../models/ticket').Ticket;
 var checkAuth = require('../middleware/checkAuth')
+
 module.exports = function(app) {
     app.get('/', function (req, res, next) {
         res.render('index', {title: 'Express'});
@@ -40,4 +42,28 @@ module.exports = function(app) {
     app.get("/login", require('./login').get);
 
     app.post("/login", require('./login').post);
+
+    app.get("/addticket", function (req, res, next) {
+        res.render('addticket');
+    });
+
+    app.post("/addticket", function(req, res, next){
+        var from = req.body.from;
+        var to = req.body.to;
+
+        console.log(from);
+        console.log(to);
+        var ticket = new Ticket({from : from, to : to});
+        ticket.save(function(err){
+            return next(err);
+        });
+        res.send({});
+    });
+
+    app.get("/getalltickets", function(req, res, next){
+        Ticket.find({}, function (err, users) {
+            if (err) return next(err);
+            res.json(users);
+        })
+    });
 };
