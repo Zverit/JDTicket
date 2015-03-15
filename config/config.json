@@ -1,0 +1,12 @@
+{
+  "mongoose" : {
+      "uri" : "mongodb://localhost/play",
+      "options" : {
+         "server" : {
+           "socketOptions" : {
+              "keepAlive" : 1
+           }
+         }
+      }
+  }
+}

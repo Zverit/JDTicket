@@ -8,7 +8,18 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+
 var app = express();
+
+
+
+var Cat = mongoose.model('Cat', { name: String });
+
+var kitty = new Cat({ name: 'Zildjian' });
+kitty.save(function (err) {
+    if (err) // ...
+        console.log('meow');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
