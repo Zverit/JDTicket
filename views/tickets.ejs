@@ -3,7 +3,16 @@
 <div class="container text-center">
 <h3>Добро пожаловать, <%=user.get('login')%></h3>
 </div>
-<div class="jumbotron">
-<p class="lead">Билетов пока нет</p>
+<div >
+
+    <div data-bind="foreach: tickets">
+        <div class="jumbotron">
+            <div data-bind="text: from"></div>
+            <div data-bind="text: to"></div>
+        </div>
+    </div>
+
 <div id="solution2" data-value='{"name": "solution2"}'></div>
 </div>
+<script src="javascripts/ticketsContext.js"></script>
+<script src="javascripts/ticketsViewmodel.js"></script>

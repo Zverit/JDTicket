@@ -18,7 +18,6 @@ exports.post = function(req, res, next){
            if(err instanceof AuthError){
                res.send({});
                return next(new HttpError(403, err.message));
-
            }
            else{
                return next(err);

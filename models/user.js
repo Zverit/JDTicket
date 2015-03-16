@@ -17,7 +17,8 @@ var schema = new Schema({
     salt : {
         type: String,
         required: true
-    }
+    },
+    tickets : [String]
 });
 
 schema.methods.encryptPassword = function(password){
@@ -58,7 +59,6 @@ schema.statics.autorize = function(login, password, callback){
         }
     ], callback);
 };
-
 
 function AuthError(message) {
     Error.apply(this, arguments);

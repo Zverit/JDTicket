@@ -1,8 +1,37 @@
 var User = require('../models/user').User;
 var Ticket = require('../models/ticket').Ticket;
 var checkAuth = require('../middleware/checkAuth')
+var Excel = require("exceljs");
+var http = require('http'),
+    fileSystem = require('fs'),
+    path = require('path');
+
 
 module.exports = function(app) {
+    app.get('/excel/:user', function(req, res, next){
+        var workbook = new Excel.Workbook();
+        var ws = workbook.addWorksheet("blort");
+        var row12 = ws.getRow(1);
+        row12.height = 40;
+        row12.width =  500;
+        row12.getCell(1).value = req.params.user;
+
+        workbook.xlsx.writeFile("chikarachka.xlsx")
+            .then(function() {
+                console.log("Done.");
+                var filePath = path.join("./", 'chikarachka.xlsx');
+                var stat = fileSystem.statSync(filePath);
+
+                res.writeHead(200, {
+                    'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'Content-Length': stat.size
+                });
+
+                var readStream = fileSystem.createReadStream(filePath);
+                readStream.pipe(res);
+            });
+    });
+
     app.get('/', function (req, res, next) {
         res.render('index', {title: 'Express'});
     });
@@ -31,7 +60,6 @@ module.exports = function(app) {
                 user: req.user
             });
         });
-
     });
 
     app.post("/logout", function(req, res) {
@@ -43,8 +71,30 @@ module.exports = function(app) {
 
     app.post("/login", require('./login').post);
 
+    app.get("/adduserticket/:id", checkAuth, function(req, res, next){
+        console.log(req.session.user);
+        User.findByIdAndUpdate(req.session.user,
+            {$push: {tickets: req.params.id}} ,
+            function(err, user){
+                res.json(user);
+            }
+        );
+    });
+
+    app.get("/deleteuserticket/:id", checkAuth, function(req, res, next){
+        console.log(req.session.user);
+        User.findByIdAndUpdate(req.session.user,
+            {$pull: {tickets: req.params.id}} ,
+            function(err, user){
+                res.json(user);
+            }
+        );
+    });
+
     app.get("/addticket", function (req, res, next) {
+
         res.render('addticket');
+
     });
 
     app.post("/addticket", function(req, res, next){
@@ -53,6 +103,7 @@ module.exports = function(app) {
 
         console.log(from);
         console.log(to);
+
         var ticket = new Ticket({from : from, to : to});
         ticket.save(function(err){
             return next(err);
