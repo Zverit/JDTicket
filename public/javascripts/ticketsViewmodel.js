@@ -1,20 +1,16 @@
-window.ticketModel = function () {
-    var datacontext = window.datacontext();
+window.ticketModel = (function (ko, dataContext) {
+    var tickets = ko.observableArray();
 
-    var firstName = ko.observable("Bert");
-    var lastName = ko.observable("Berlington");
-    var tickets = ko.observable();
-
-    datacontext.getPersonal(tickets);
+    dataContext.getPersonal(tickets);
     return {
-        firstName: firstName,
-        lastName: lastName,
-        tickets:tickets
+        tickets: tickets,
+        addTicket: function(){
+            dataContext.addTicket(this._id);
+        dataContext.getPersonal(tickets);},
+        getExcel: function(){dataContext.getExcel()}
     };
-};
-
+})(ko, window.dataContext);
 
 $(document).ready(function() {
-
-    ko.applyBindings(window.ticketModel());
+    ko.applyBindings(window.ticketModel);
 });

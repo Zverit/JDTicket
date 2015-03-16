@@ -9,7 +9,15 @@ var schema = new Schema({
      to : {
         type : String,
         required: true
-     }
+     },
+    date:{
+        type: String,
+        required: true
+    },
+    count : {
+        type: Number,
+        required: true
+    }
 });
 
 exports.Ticket = mongoose.model('Ticket', schema);

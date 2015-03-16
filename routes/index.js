@@ -71,8 +71,17 @@ module.exports = function(app) {
 
     app.post("/login", require('./login').post);
 
-    app.get("/adduserticket/:id", checkAuth, function(req, res, next){
+    app.post("/adduserticket/:id", checkAuth, function(req, res, next){
         console.log(req.session.user);
+
+        Ticket.findOneAndUpdate(
+            { _id: req.params.id },
+            { $inc:   { count: -1 } },
+            { upsert: true },
+            function (err, idDoc) {
+
+            });
+
         User.findByIdAndUpdate(req.session.user,
             {$push: {tickets: req.params.id}} ,
             function(err, user){
@@ -81,7 +90,7 @@ module.exports = function(app) {
         );
     });
 
-    app.get("/deleteuserticket/:id", checkAuth, function(req, res, next){
+    app.post("/deleteuserticket/:id", checkAuth, function(req, res, next){
         console.log(req.session.user);
         User.findByIdAndUpdate(req.session.user,
             {$pull: {tickets: req.params.id}} ,
@@ -92,19 +101,16 @@ module.exports = function(app) {
     });
 
     app.get("/addticket", function (req, res, next) {
-
         res.render('addticket');
-
     });
 
     app.post("/addticket", function(req, res, next){
         var from = req.body.from;
         var to = req.body.to;
+        var date = req.body.date;
+        var count = req.body.count;
 
-        console.log(from);
-        console.log(to);
-
-        var ticket = new Ticket({from : from, to : to});
+        var ticket = new Ticket({from : from, to : to, date: date, count: count});
         ticket.save(function(err){
             return next(err);
         });

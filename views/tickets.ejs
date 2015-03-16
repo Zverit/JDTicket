@@ -1,18 +1,22 @@
 <% layout('layout') -%>
 <% block('title', "") -%>
-<div class="container text-center">
+
+<div class="container text-center ">
 <h3>Добро пожаловать, <%=user.get('login')%></h3>
 </div>
 <div >
 
-    <div data-bind="foreach: tickets">
-        <div class="jumbotron">
-            <div data-bind="text: from"></div>
-            <div data-bind="text: to"></div>
+    <div id="ticketContainer" data-bind="foreach: tickets">
+        <div class="jumbotron  ">
+            <div class="from"><div class="ticketText">Откуда:</div><div class="tiketfrom" data-bind="text: from"></div></div>
+            <div class="to"><div class="ticketText">Куда: </div><div class="tiketfrom" data-bind="text: to"></div></div>
+            <div class="date"><div class="ticketText">Время отправления: </div><div class="tiketfrom" data-bind="text: date"></div></div>
+            <div class="count"><div class="ticketText">Осталось: </div><div class="tiketfrom" data-bind="text: count"></div></div>
+            <button class="btn btn-primary pull-right btn-bron" data-bind="click: $parent.addTicket">Забронировать</button>
         </div>
     </div>
-
-<div id="solution2" data-value='{"name": "solution2"}'></div>
+    <button class="btn btn-info pull-right btn-bron" data-bind="click: getExcel">Печать в Excel</button>
 </div>
+
 <script src="javascripts/ticketsContext.js"></script>
 <script src="javascripts/ticketsViewmodel.js"></script>

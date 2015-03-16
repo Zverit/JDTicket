@@ -17,3 +17,56 @@ a {
 .center form {
     display:inline-block;
 }
+
+
+.tiketfrom{
+    display: inline-block;
+    border-radius: 6px;
+    padding: 10px;
+    font-size:larger;
+    background-color: #e2e2e2;
+}
+
+#ticketContainer{
+    display: inline-block;
+    width: 100%;
+}
+
+.btn-bron{
+    padding: 10px;
+}
+
+.ticketText{
+    text-transform: uppercase;
+    font-weight: lighter;
+    display: inline-block;
+    padding: 10px;
+}
+
+.welcome{
+    vertical-align: middle;
+    width: 50%;
+    display: inline-block;
+}
+
+.logo{
+    display: inline-block;
+    padding-top: 5px;
+}
+.from{
+    display: inline-block;
+    width: 20%;
+}
+.to{
+    display: inline-block;
+    width: 20%;
+}
+
+.date{
+    display: inline-block;
+    width: 25%;
+}
+.count{
+    display: inline-block;
+    width: 20%;
+}
