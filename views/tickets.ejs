@@ -12,7 +12,7 @@
             <div class="to"><div class="ticketText">Куда: </div><div class="tiketfrom" data-bind="text: to"></div></div>
             <div class="date"><div class="ticketText">Время отправления: </div><div class="tiketfrom" data-bind="text: date"></div></div>
             <div class="count"><div class="ticketText">Осталось: </div><div class="tiketfrom" data-bind="text: count"></div></div>
-            <button class="btn btn-primary pull-right btn-bron" data-bind="click: $parent.addTicket">Забронировать</button>
+            <div class="pull-right" data-bind="if: count > 0"><button class="btn btn-primary  btn-bron" data-bind="click: $parent.addTicket">Забронировать</button></div>
         </div>
     </div>
     <button class="btn btn-info pull-right btn-bron" data-bind="click: getExcel">Печать в Excel</button>

@@ -5,39 +5,72 @@ var Excel = require("exceljs");
 var http = require('http'),
     fileSystem = require('fs'),
     path = require('path');
-
+var _ = require("underscore");
+var async = require('async');
 
 module.exports = function(app) {
     app.get('/excel/:user', function(req, res, next){
-        var workbook = new Excel.Workbook();
-        var ws = workbook.addWorksheet("blort");
-        var row12 = ws.getRow(1);
-        row12.height = 40;
-        row12.width =  500;
-        row12.getCell(1).value = req.params.user;
 
-        workbook.xlsx.writeFile("chikarachka.xlsx")
-            .then(function() {
-                console.log("Done.");
-                var filePath = path.join("./", 'chikarachka.xlsx');
-                var stat = fileSystem.statSync(filePath);
+        async.waterfall([
+            function(callback){
+                User.findOne(req.session.user, callback);
+            },
+            function(user, callback){
+                Ticket.find({
+                    '_id': { $in: user.tickets}
+                }, callback);
+            },
+            function(tickets, callback){
+                var workbook = new Excel.Workbook();
+                var ws = workbook.addWorksheet("blort");
 
-                res.writeHead(200, {
-                    'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'Content-Length': stat.size
+                for(var i in tickets) {
+                    ws.addRow([tickets[i].from, tickets[i].to, tickets[i].date]);
+                }
+
+                workbook.xlsx.writeFile("chikarachka.xlsx")
+                    .then(function() {
+                        console.log("Done.");
+                        var filePath = path.join("./", 'chikarachka.xlsx');
+                        var stat = fileSystem.statSync(filePath);
+
+                        res.writeHead(200, {
+                            'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                            'Content-Length': stat.size
+                        });
+
+                        var readStream = fileSystem.createReadStream(filePath);
+                        readStream.pipe(res);
+                    });
+            }
+        ], function(error){
+
+        });
+
+/*       var users =  User.findById(req.session.user).stream();
+        tickets = users.on('data', function(user){
+            user.tickets.forEach(function(ticket, i, arr){
+                var ticketInfo = Ticket.findById(ticket).stream();
+                ticketInfo.on('data', function(ticket){
+                    tickets = ticket;
                 });
-
-                var readStream = fileSystem.createReadStream(filePath);
-                readStream.pipe(res);
             });
+        });
+
+        */
     });
+
 
     app.get('/', function (req, res, next) {
         res.render('index', {title: 'Express'});
     });
 
+    app.get('/loginAdmin', checkAuth, function (req, res, next) {
+        res.render('loginAdmin');
+    });
+
     app.get('/admin', checkAuth, function (req, res, next) {
-        res.render('index', {title: 'Admin'});
+        res.render('admin');
     });
 
     app.get("/users", function (req, res, next) {

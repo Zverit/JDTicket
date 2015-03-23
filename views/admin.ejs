@@ -1,0 +1,24 @@
+<% layout('layout') -%>
+<% block('title', "") -%>
+
+
+<div class="container text-center ">
+    <h2>Панель администрирования</h2>
+</div>
+
+<div class="center adminpanel">
+    <button class="btn btn-info btn-bron" onclick="addticket()">Добавить билеты в базу</button>
+    <button class="btn btn-info btn-bron" onclick="allusers()">Вывести всех пользователей</button>
+<button class="btn btn-info btn-bron" onclick="alltickets()">Вывести все билеты</button>
+</div>
+    <script>
+        function addticket(){
+            window.location.href = '/addticket';
+        };
+        function allusers(){
+            window.location.href = '/users';
+        };
+        function alltickets(){
+            window.location.href = '/getalltickets';
+        };
+    </script>
