@@ -2,6 +2,9 @@ var User = require('../models/user').User;
 var Ticket = require('../models/ticket').Ticket;
 var async = require('async');
 var Excel = require("exceljs");
+var http = require('http'),
+    fileSystem = require('fs'),
+    path = require('path');
 
 exports.get = function(req, res, next){
     async.waterfall([

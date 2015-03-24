@@ -1,9 +1,7 @@
 var User = require('../models/user').User;
 var Ticket = require('../models/ticket').Ticket;
-var checkAuth = require('../middleware/checkAuth')
-var http = require('http'),
-    fileSystem = require('fs'),
-    path = require('path');
+var checkAuth = require('../middleware/checkAuth');
+var http = require('http');
 var _ = require("underscore");
 
 module.exports = function(app) {
