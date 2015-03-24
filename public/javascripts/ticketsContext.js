@@ -18,7 +18,7 @@ window.dataContext = (function(ko) {
         }, "json");
     }
     function getExcel(){
-        window.location.href = '/excel/34';
+        window.location.href = '/excel';
     }
 
 })(ko);
