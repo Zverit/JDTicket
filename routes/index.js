@@ -46,18 +46,6 @@ module.exports = function(app) {
         ], function(error){
 
         });
-
-/*       var users =  User.findById(req.session.user).stream();
-        tickets = users.on('data', function(user){
-            user.tickets.forEach(function(ticket, i, arr){
-                var ticketInfo = Ticket.findById(ticket).stream();
-                ticketInfo.on('data', function(ticket){
-                    tickets = ticket;
-                });
-            });
-        });
-
-        */
     });
 
 
